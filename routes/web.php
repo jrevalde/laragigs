@@ -23,12 +23,35 @@ Route::get('/', function () {
     ]); //we are able to send values over to the view, in this case the variable is $heading.
 });
 
-Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.
+//this approach uses route-model-binding.
+Route::get('/listings/listing/{listing}', function(Listing $listing){ //This Route will show a listing instead of all the listings. it does the same thing as the one below.
     return view('listing', 
-    [
-        'listing' => Listing::find($id)
-    ]);
+        [
+            'listing' => $listing //we dont need to manually do error handling cos it already comes with the model itself. 
+        ]);
 });
+
+//this way is the cookie cutter way
+// Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.
+
+//     $listing = Listing::find($id);
+
+//     if($listing)
+//     {   
+//         return view('listing', 
+//         [
+//             'listing' => $listing
+//         ]);
+
+//     }
+//     else
+//     {
+//         abort('404');
+//     }
+   
+// });
+
+
 /*Route::get('/posts{id}', function($id){ //id is the route param
     return response('Post ' . $id);
 })->where('id', '[0-9]+'); // the route params can have conditions that limit their range */ 

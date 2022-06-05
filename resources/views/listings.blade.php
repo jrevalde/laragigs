@@ -1,6 +1,14 @@
-<h1>Listings</h1>
+@extends('layout')
 
-<h3>{{$heading}}</h3> <!--Using the blade file type we can echo out php in a similar way as ejs templating.-->
+@section('content')
+@include('partials._hero') {{--getting from the partials folder.--}}
+@include('partials._search')
+
+
+
+<div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+
+<h1>{{$heading}}</h1> <!--Using the blade file type we can echo out php in a similar way as ejs templating.-->
 
 
 @unless(count($listings) == 0) <!--We can also use conditionals-->
@@ -8,19 +16,15 @@
   
 @foreach($listings as $listing) <!--So now instead of typing tedious php tags, we can use @ symbol for any code logic.-->
 
-    <h2>
-        <a href="/listings/listing/{{$listing['id']}}">
-            {{$listing['title']}}
-        </a>
-    </h2>
-    <p>
-        {{$listing['description']}}
-    </p>
-   
+    <x-listing-card : listing="$listing"/> {{--This is how we gain access to the component--}}
+
+
 @endforeach
 
 @else
 <p>No Listings were found.</p>
 @endunless
 
+</div>
 
+@endsection
