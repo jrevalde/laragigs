@@ -13,7 +13,9 @@
             </h3>
             <div class="text-xl font-bold mb-4">{{$listing->company}}</div>
             
-            <ul class="flex">
+
+            <x-listing-tags :tagsCsv="$listing->tags" />
+            {{-- <ul class="flex">
                 <li
                     class="bg-black text-white rounded-xl px-3 py-1 mr-2"
                 >
@@ -34,7 +36,7 @@
                 >
                     <a href="#">Vue</a>
                 </li>
-            </ul>
+            </ul> --}}
 
             <div class="text-lg mt-4">
                 <i class="fa-solid fa-location-dot"></i> {{$listing->location}}

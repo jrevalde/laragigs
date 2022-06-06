@@ -16,7 +16,7 @@
   
 @foreach($listings as $listing) <!--So now instead of typing tedious php tags, we can use @ symbol for any code logic.-->
 
-    <x-listing-card : listing="$listing"/> {{--This is how we gain access to the component--}}
+    <x-listing-card :listing="$listing"/> {{--This is how we gain access to the component--}}
 
 
 @endforeach
