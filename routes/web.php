@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Listing;
@@ -15,21 +16,10 @@ use App\Models\Listing;
 |
 */
 
-Route::get('/', function () {
-    return view('listings',
-     [
-         'heading'=> 'Latest Listings',
-         'listings' => Listing::all()
-    ]); //we are able to send values over to the view, in this case the variable is $heading.
-});
+Route::get('/', [ListingController::class, 'index']);
 
 //this approach uses route-model-binding.
-Route::get('/listings/listing/{listing}', function(Listing $listing){ //This Route will show a listing instead of all the listings. it does the same thing as the one below.
-    return view('listing', 
-        [
-            'listing' => $listing //we dont need to manually do error handling cos it already comes with the model itself. 
-        ]);
-});
+Route::get('/listings/listing/{listing}', [ListingController::class, 'show']);
 
 //this way is the cookie cutter way
 // Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.
