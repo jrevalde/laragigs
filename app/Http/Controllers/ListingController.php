@@ -17,7 +17,7 @@ class ListingController extends Controller
         return view('listings.index', //because we have in a listings folder and then in a file called index
         [
             'heading'=> 'Latest Listings',
-            'listings' => Listing::latest()->filter(request(['tag']))->get() //this sorts the listing by the latest. it's the same as using all() but sorted
+            'listings' => Listing::latest()->filter(request(['tag']))->paginate(4) //this sorts the listing by the latest. it's the same as using all() but sorted
         ]); //we are able to send values over to the view, in this case the variable is $heading.
     }
 
@@ -53,6 +53,13 @@ class ListingController extends Controller
             'tags' => 'required',
             'description' => 'required'
         ]); //if any of these fail, it will send back an error to the view.
+
+
+        //check if there was an image uploaded
+        if($request->hasFile('logo'))
+        {
+            $formfields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
 
         //if it passes validation we want to create a new row in the database.
         Listing::create($formfields);

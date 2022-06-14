@@ -27,4 +27,9 @@
 
 </div>
 
+<div class="mt-6 p-4">
+
+    {{-- This will show us the pagination links --}}
+    {{$listings->links()}}
+</div>
 @endsection

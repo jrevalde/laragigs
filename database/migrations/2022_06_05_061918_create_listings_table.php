@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); //we can make new fields
+            $table->string('title');
+            $table->string('logo')->nullable();  //we can make new fields
             $table->string('tags');
             $table->string('company');
             $table->string('location');

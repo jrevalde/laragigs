@@ -9,7 +9,7 @@ class Listing extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'company', 'location', 'website', 'email', 'description', 'tags']; //this is necessary for the model to create new row in database. it lets laravel know which fields are allowed to be filled.
+    protected $fillable = ['title', 'logo', 'company', 'location', 'website', 'email', 'description', 'tags']; //this is necessary for the model to create new row in database. it lets laravel know which fields are allowed to be filled.
 
     public function scopeFilter($query, array $filters)
     {
