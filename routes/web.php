@@ -16,10 +16,8 @@ use App\Models\Listing;
 |
 */
 
+//Show all listings
 Route::get('/', [ListingController::class, 'index']);
-
-
-
 
 //This will store listing data
 Route::post('/listings', [ListingController::class, 'store']);
@@ -27,13 +25,14 @@ Route::post('/listings', [ListingController::class, 'store']);
 //this approach uses route-model-binding.
 Route::get('/listings/listing/{listing}', [ListingController::class, 'show']);
 
-
-
 //Show Create Form
-
 Route::get('/listings/create', [ListingController::class, 'create']);
 
+//Show edit form
+Route::get('/listings/listing/{listing}/edit', [ListingController::class, 'edit']);
 
+//Update the database with the new fields from edit form
+Route::put('/listings/listing/{listing}', [ListingController::class, 'update']);
 
 //this way is the cookie cutter way
 // Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.

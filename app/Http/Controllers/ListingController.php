@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class ListingController extends Controller
 {
@@ -67,6 +68,40 @@ class ListingController extends Controller
          //Create a flash message for confirmation. it is stored in memory for one page load. You can also use message, success, error etc 
         return redirect('/')->with('success', 'Listing Successfully Created');
         //however we still need somewhere in our view to actually show it.
+    }
+
+    //Show edit form
+    public function edit(Listing $listing)
+    {
+        return view('listings.edit', ['listing' => $listing]);
+    }
+
+    //update the listing as well as update the database row
+    public function update(Request $request, Listing $listing)
+    {
+        $formfields = $request->validate([   
+            'title' => 'required',
+            'company' => ['required'],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+
+       
+        if($request->hasFile('logo'))
+        {
+            $formfields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        
+        $listing->update($formfields);
+
+        
+        return back()->with('success', 'Listing Successfully Updated');
+        
     }
 }
 
