@@ -18,8 +18,22 @@ use App\Models\Listing;
 
 Route::get('/', [ListingController::class, 'index']);
 
+
+
+
+//This will store listing data
+Route::post('/listings', [ListingController::class, 'store']);
+
 //this approach uses route-model-binding.
 Route::get('/listings/listing/{listing}', [ListingController::class, 'show']);
+
+
+
+//Show Create Form
+
+Route::get('/listings/create', [ListingController::class, 'create']);
+
+
 
 //this way is the cookie cutter way
 // Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.
@@ -53,3 +67,6 @@ Route::get('/listings/listing/{listing}', [ListingController::class, 'show']);
 });*/
 
 //e.g {url}/searchq=name=jethro&city=sydney || this would output jethro sydney in the query params header.
+
+
+

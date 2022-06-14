@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ListingController extends Controller
 {
@@ -27,6 +28,38 @@ class ListingController extends Controller
         [
             'listing' => $listing //we dont need to manually do error handling cos it already comes with the model itself. 
         ]);
+    }
+
+    //our method for creating a listing
+
+    public function create()
+    {
+        return view('listings.create');
+    }
+
+    //store listing data
+    public function store(Request $request)
+    {
+        //dd($request->all()); just a sanity check
+
+        //Valiation in Laravel is made easy. Only 2 steps.
+
+        $formfields = $request->validate([  //we can specify what rules we want for certain fields. 
+            'title' => 'required',
+            'company' => ['required', Rule::unique('listings', 'company')],
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]); //if any of these fail, it will send back an error to the view.
+
+        //if it passes validation we want to create a new row in the database.
+        Listing::create($formfields);
+
+         //Create a flash message for confirmation. it is stored in memory for one page load. You can also use message, success, error etc 
+        return redirect('/')->with('success', 'Listing Successfully Created');
+        //however we still need somewhere in our view to actually show it.
     }
 }
 
