@@ -62,6 +62,8 @@ class ListingController extends Controller
             $formfields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
+        $formfields['user_id'] = auth()->id();
+
         //if it passes validation we want to create a new row in the database.
         Listing::create($formfields);
 
@@ -103,6 +105,15 @@ class ListingController extends Controller
         return back()->with('success', 'Listing Successfully Updated');
         
     }
+
+    public function destroy(Listing $listing)
+    {   
+        $listing->delete();
+
+        return redirect('/')->with('success', 'Listing was successfully deleted');
+    }
+
+  
 }
 
 // Common Naming Conventions:

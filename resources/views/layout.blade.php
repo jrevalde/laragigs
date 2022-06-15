@@ -35,17 +35,43 @@
                 ><img class="w-24" src="{{asset('images/logo.png')}}" alt="" class="logo"
             /></a>
             <ul class="flex space-x-6 mr-6 text-lg">
+                @auth  {{--@auth controls visibility of certain elements  depending if the user is/isnt logged in.--}}
+                    
+                
                 <li>
-                    <a href="register.html" class="hover:text-laravel"
+                    <span class="font-bold uppercase">
+                        Welcome {{auth()->user()->name}}
+                    </span>
+                <li>
+                    <a href="/listings/manage" class="hover:text-laravel"
+                        ><i class="fa-solid fa-gear"></i>
+                        Listings</a
+                    >
+                </li>
+                <li>
+                    <form class="inline" action="logout" method="POST">
+                        @csrf
+                        <button type="submit">
+                            <i class="fa-solid fa-door-closed "></i> Logout
+                        </button>
+                    </form>
+                </li>
+
+                @else
+
+                <li>
+                    <a href="/register" class="hover:text-laravel"
                         ><i class="fa-solid fa-user-plus"></i> Register</a
                     >
                 </li>
                 <li>
-                    <a href="login.html" class="hover:text-laravel"
+                    <a href="/login" class="hover:text-laravel"
                         ><i class="fa-solid fa-arrow-right-to-bracket"></i>
                         Login</a
                     >
                 </li>
+
+                @endauth
             </ul>
         </nav>
 

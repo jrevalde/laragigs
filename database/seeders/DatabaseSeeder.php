@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Listing;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -15,9 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create(); //this will create 10 dummy users for us. This function comes from factories/userFactory.php
+        //\App\Models\User::factory(10)->create(); //this will create 10 dummy users for us. This function comes from factories/userFactory.php
 
-        Listing::factory(10)->create(); // this will create 5 neew listings ||it doesnt work for some reason :(
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'john@gmail.com'
+
+        ]);
+
+        Listing::factory(10)->create(['user_id' => $user->id]); // this will create 5 neew listings ||it doesnt work for some reason :(
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

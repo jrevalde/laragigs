@@ -79,6 +79,12 @@
 <x-card class="mt-4 p-2 flex space-x-6">
     <a href="/listings/listing/{{$listing->id}}/edit"></a>
     <i class="fa-solid fa-pencil"></i> Edit
+
+    <form method="POST" action="/listings/listing/{{$listing->id}}/delete">
+        @csrf
+        @method('DELETE')
+        <button class="text-red-500"><i class="fa-solid fa-trash"></i> DELETE</button>
+    </form>
 </x-card>
 </div>
 

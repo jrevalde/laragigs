@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Listing extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'logo', 'company', 'location', 'website', 'email', 'description', 'tags']; //this is necessary for the model to create new row in database. it lets laravel know which fields are allowed to be filled.
+    protected $fillable = ['title', 'logo', 'company', 'location', 'website', 'email', 'description', 'tags', 'user_id']; //this is necessary for the model to create new row in database. it lets laravel know which fields are allowed to be filled.
 
     public function scopeFilter($query, array $filters)
     {
@@ -26,6 +27,11 @@ class Listing extends Model
       }
     }
 
-
+    //Relationship To User
+    public function user()
+    {
+      //theh relationship is going to be belongs to
+      return $this->belongsTo(User::class, 'user_id');
+    }
     
 }

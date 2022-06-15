@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ListingController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Models\Listing;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +27,31 @@ Route::post('/listings', [ListingController::class, 'store']);
 Route::get('/listings/listing/{listing}', [ListingController::class, 'show']);
 
 //Show Create Form
-Route::get('/listings/create', [ListingController::class, 'create']);
+Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth'); //we add the auth middleware to wherever we don't want guests to access.
 
 //Show edit form
-Route::get('/listings/listing/{listing}/edit', [ListingController::class, 'edit']);
+Route::get('/listings/listing/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth');
+
+//delete a listing
+Route::delete('/listings/listing/{listing}/delete', [ListingController::class, 'destroy'])->middleware('auth'); //destroy is the naming convention for deleting.
 
 //Update the database with the new fields from edit form
-Route::put('/listings/listing/{listing}', [ListingController::class, 'update']);
+Route::put('/listings/listing/{listing}', [ListingController::class, 'update'])->middleware('auth');
+
+//show register create form
+Route::get('/register', [UserController::class, 'register'])->middleware('guest'); //we can put guest middleware in the routes that guests can access.
+
+//Create new user
+Route::post('/users', [UserController::class, 'store']);
+
+//Log user Out
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+
+//Show the login form
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest'); //we can give our route a name
+
+//login the user
+Route::post('users/authenticate', [UserController::class, 'authenticate']);
 
 //this way is the cookie cutter way
 // Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.
