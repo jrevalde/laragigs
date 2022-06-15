@@ -81,6 +81,12 @@ class ListingController extends Controller
     //update the listing as well as update the database row
     public function update(Request $request, Listing $listing)
     {
+        //Make sure the logged in user is the owner.
+        if($listing->user_id != auth()->id)
+        {
+            abort(403, 'Unauthorized Action');
+        }
+
         $formfields = $request->validate([   
             'title' => 'required',
             'company' => ['required'],
@@ -108,11 +114,22 @@ class ListingController extends Controller
 
     public function destroy(Listing $listing)
     {   
+         //Make sure the logged in user is the owner.
+         if($listing->user_id != auth()->id)
+         {
+             abort(403, 'Unauthorized Action');
+         }
+         
         $listing->delete();
 
         return redirect('/')->with('success', 'Listing was successfully deleted');
     }
 
+    //Manage the listings
+    public function manage() //we have to pass in the users listings that need to be managed.
+    {
+        return view('listings.manage', ['listings' => auth()->user()->listings()->get()]); //auth()->user() gives us our logged in user. 
+    }
   
 }
 

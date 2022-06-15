@@ -17,6 +17,10 @@ use App\Http\Controllers\ListingController;
 |
 */
 
+
+
+//LISTING ROUTES
+
 //Show all listings
 Route::get('/', [ListingController::class, 'index']);
 
@@ -38,6 +42,15 @@ Route::delete('/listings/listing/{listing}/delete', [ListingController::class, '
 //Update the database with the new fields from edit form
 Route::put('/listings/listing/{listing}', [ListingController::class, 'update'])->middleware('auth');
 
+//Manage Listings
+Route::get('listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+
+
+
+
+
+//USER ROUTES
+
 //show register create form
 Route::get('/register', [UserController::class, 'register'])->middleware('guest'); //we can put guest middleware in the routes that guests can access.
 
@@ -52,6 +65,8 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 
 //login the user
 Route::post('users/authenticate', [UserController::class, 'authenticate']);
+
+
 
 //this way is the cookie cutter way
 // Route::get('/listings/listing/{id}', function($id){ //This Route will show a listing instead of all the listings.
